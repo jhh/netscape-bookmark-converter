@@ -21,16 +21,22 @@ for filename in args.filenames:
     soup = BeautifulSoup(open(filename, encoding='utf8'), "html5lib")
     for link in soup.find_all('a'):
         bookmark = {}
+        # url and title
         bookmark['url'] = link.get('href')
         bookmark['title'] = link.string.strip()
+        # add date
         secs = link.get('add_date')
         date = datetime.fromtimestamp(int(secs), tz=timezone.utc)
-        bookmark['add_date'] = {'$date': date.isoformat()} if args.mongo \
-            else date.isoformat()
-        bookmark['tags'] = link.get('tags').split(',')
+        bookmark['add_date'] = \
+            {'$date': date.isoformat()} if args.mongo else date.isoformat()
+        # tags
+        tags = link.get('tags')
+        bookmark['tags'] = tags.split(',') if tags else []
         if args.tags:
             bookmark['tags'] += args.tags
+        # comment
         sibling = link.parent.next_sibling
         if sibling and sibling.name == 'dd':
             bookmark['comment'] = sibling.string.strip()
+        # make json
         print(json.dumps(bookmark, sort_keys=False, indent=4))
