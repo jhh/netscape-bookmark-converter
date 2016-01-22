@@ -9,7 +9,7 @@ import json
 
 
 parser = ArgumentParser(description='Convert Netscape bookmarks to JSON')
-parser.add_argument(dest='filenames', metavar='filename', nargs='*')
+parser.add_argument(dest='filenames', metavar='filename', nargs='+')
 parser.add_argument('-t', '--tag', metavar='tag', dest='tags',
                     action='append', help='add tag to bookmarks, repeat \
                                            for multiple tags')
