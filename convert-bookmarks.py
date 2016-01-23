@@ -36,7 +36,8 @@ for filename in args.filenames:
             bookmark['tags'] += args.tags
         # comment
         sibling = link.parent.next_sibling
-        if sibling and sibling.name == 'dd':
-            bookmark['comment'] = sibling.string.strip()
+        bookmark['comment'] = \
+            sibling.string.strip() if sibling and sibling.name == 'dd' \
+            else ''
         # make json
         print(json.dumps(bookmark, sort_keys=False, indent=4))
