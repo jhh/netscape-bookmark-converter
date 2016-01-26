@@ -5,6 +5,7 @@
 from argparse import ArgumentParser
 from bs4 import BeautifulSoup
 from datetime import datetime, timezone
+from bson import json_util
 import json
 
 
@@ -27,8 +28,7 @@ for filename in args.filenames:
         # add date
         secs = link.get('add_date')
         date = datetime.fromtimestamp(int(secs), tz=timezone.utc)
-        bookmark['add_date'] = \
-            {'$date': date.isoformat()} if args.mongo else date.isoformat()
+        bookmark['add_date'] = date
         # tags
         tags = link.get('tags')
         bookmark['tags'] = tags.split(',') if tags else []
@@ -40,4 +40,7 @@ for filename in args.filenames:
             sibling.string.strip() if sibling and sibling.name == 'dd' \
             else ''
         # make json
-        print(json.dumps(bookmark, sort_keys=False, indent=4))
+        if args.mongo:
+            print(json_util.dumps(bookmark, sort_keys=False, indent=4))
+        else:
+            print(json.dumps(bookmark, sort_keys=False, indent=4))
