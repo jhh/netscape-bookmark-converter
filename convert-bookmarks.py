@@ -24,7 +24,8 @@ for filename in args.filenames:
         bookmark = {}
         # url and title
         bookmark['url'] = link.get('href')
-        bookmark['title'] = link.string.strip()
+        bookmark['title'] = link.string.strip() if link.string\
+                                                else bookmark['url']
         # add date
         secs = link.get('add_date')
         date = datetime.fromtimestamp(int(secs), tz=timezone.utc)
