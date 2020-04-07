@@ -17,7 +17,7 @@ See Python [documentation page](https://docs.python.org/3/library/venv.html).
 
 ```
 $ ./convert-bookmarks.py -h
-usage: convert-bookmarks.py [-h] [-t tag] [-m] [filename [filename ...]]
+usage: convert-bookmarks.py [-h] [-t tag] [filename [filename ...]]
 
 Convert Netscape bookmarks to JSON
 
@@ -27,7 +27,6 @@ positional arguments:
 optional arguments:
   -h, --help         show this help message and exit
   -t tag, --tag tag  add tag to bookmarks
-  -m, --mongodb      output in mongodb import format
 ```
 
 ## License
